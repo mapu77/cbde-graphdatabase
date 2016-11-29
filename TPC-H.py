@@ -13,7 +13,7 @@ def show_options():
     print("\t 2 - Execute Query 2")
     print("\t 3 - Execute Query 3")
     print("\t 4 - Execute Query 4")
-    print("\t 5 - Inserts (Warning: this can only be done once)")
+    print("\t 5 - Inserts (Warning: this should only be done once)")
     print("\t 0 - Exit")
 
 
