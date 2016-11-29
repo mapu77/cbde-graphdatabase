@@ -27,7 +27,7 @@ op = int(input())
 while op != 0:
     if op == 1:
         date = str(input("Please enter a date: (yyyy-mm-dd) "))
-        execute_query_1(db, datetime.datetime.strptime(date, "%Y-%m-%d"))
+        execute_query_1(db, date)
     elif op == 2:
         size = int(input("Please enter a size: "))
         types = input("Please enter a type: ")
