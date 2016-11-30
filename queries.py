@@ -21,9 +21,12 @@ def execute_query_2(db, size, type, region):
         min_supplycost = float(record["min_supplycost"])
 
     result = db.run("MATCH (p:Part)<-[S:SUPPLIES]-(s:Supplier) "
-                    "WHERE p.p_size = 1 and p.p_type STARTS WITH 'Ba' and s.r_name = 'BCN' and S.ps_supplycost = 1.98 "
-                    "RETURN s.s_acctbal, s.s_name, s.r_name, p.p_partkey, p.p_mfgr, s.s_address, s.s_phone, s.s_comment",
-                    {"size": size, "type": type, "region": region})
+                    "WHERE p.p_size = {size} and p.p_type STARTS WITH {type} "
+                    "and s.r_name = {region} and S.ps_supplycost = {min_supplycost}"
+                    "RETURN s.s_acctbal, s.s_name, s.n_name, p.p_partkey, "
+                    "p.p_mfgr, s.s_address, s.s_phone, s.s_comment "
+                    "ORDER BY s.s_acctbal DESC, s.n_name, s.s_name, p.p_partkey",
+                    {"size": size, "type": type, "region": region, "min_supplycost": min_supplycost})
     for record in result:
         print(record)
     print()
