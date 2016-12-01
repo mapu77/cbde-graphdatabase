@@ -33,11 +33,11 @@ def execute_query_2(db, size, type, region):
 
 
 def execute_query_3(db, segment, date1, date2):
-    result = db.run("MATCH (n:LineItem)<-[F:IS_FORMED_BY]-(o:Order)"
+    result = db.run("MATCH (n:LineItem)<-[F:IS_FORMED_BY]-(o:Order) "
                     "WHERE o.c_mktsegment = {segment} and o.o_orderdate < {date1} and n.l_shipdate > {date2} "
-                    "WITH o.o_orderkey as l_orderkey, sum(n.l_extendedprice*(1-n.l_discount)) as revenue,"
+                    "WITH o.o_orderkey as l_orderkey, sum(n.l_extendedprice*(1-n.l_discount)) as revenue, "
                     "o.o_orderdate as o_orderdate, o.o_shippriority as o_shippriority "
-                    "RETURN l_orderkey, revenue, o_orderdate, o_shippriority"
+                    "RETURN l_orderkey, revenue, o_orderdate, o_shippriority "
                     "ORDER BY revenue DESC, o_orderdate",
                     {"segment": segment, "date1": date1, "date2": date2})
 
@@ -48,11 +48,13 @@ def execute_query_3(db, segment, date1, date2):
 
 def execute_query_4(db, name, date):
     date2 = date.replace(date.year + 1)
-    result = db.run("MATCH (n:LineItem)<-[F:IS_FORMED_BY]-(o:Order)"
-                    "WHERE  n.r_name = {name} and n.n_name = o.n_name and o.o_orderdate >= {date}"
-                    "and o.o_orderdate < {date2}"
-                    "WITH sum(n.l_extendedprice*(1-n.l_discount)) as revenue"
-                    "RETURN n.n_name, revenue"
+    date = str(date.strftime("%Y-%m-%d"))
+    date2 = str(date2.strftime("%Y-%m-%d"))
+    result = db.run("MATCH (n:LineItem)<-[F:IS_FORMED_BY]-(o:Order) "
+                    "WHERE  n.r_name = {name} and n.n_name = o.n_name and o.o_orderdate >= {date} "
+                    "and o.o_orderdate < {date2} "
+                    "WITH n.n_name as n_name, sum(n.l_extendedprice*(1-n.l_discount)) as revenue "
+                    "RETURN n_name, revenue "
                     "ORDER BY revenue DESC",
                     {"name": name, "date": date, "date2": date2})
 

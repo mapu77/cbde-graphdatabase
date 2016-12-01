@@ -35,10 +35,9 @@ while op != 0:
         execute_query_2(db, size, types, region)
     elif op == 3:
         segment = input("Please enter a segment: ")
-        date1 = input("Please enter the first date: ")
-        date2 = input("Please enter the second date: ")
-        execute_query_3(db, segment, datetime.datetime.strptime(date1, "%Y-%m-%d"),
-                        datetime.datetime.strptime(date2, "%Y-%m-%d"))
+        date1 = input("Please enter the first date: (yyyy-mm-dd) ")
+        date2 = input("Please enter the second date: (yyyy-mm-dd) ")
+        execute_query_3(db, segment, date1, date2)
     elif op == 4:
         name = input("Please enter a region: ")
         date = input("Please enter a date: ")
