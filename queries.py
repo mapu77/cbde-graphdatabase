@@ -47,8 +47,7 @@ def execute_query_3(db, segment, date1, date2):
 
 
 def execute_query_4(db, name, date):
-    date2 = date
-    date2.replace(year = date2.year + 1)
+    date2 = date.replace(date.year + 1)
     result = db.run("MATCH (n:LineItem)<-[F:IS_FORMED_BY]-(o:Order)"
                     "WHERE  n.r_name = {name} and n.n_name = o.n_name and o.o_orderdate >= {date}"
                     "and o.o_orderdate < {date2}"
